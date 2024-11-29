@@ -1,0 +1,82 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.5'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.kosmo'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+def frontendDir = "$projectDir/src/main/frontend"
+
+sourceSets {
+	main {resources {
+		srcDirs = ["$projectDir/src/main/resources"]
+	}}}
+
+processResources {dependsOn "copyViteBuildFiles"}
+
+// install을하고
+task installVite(type: Exec) {
+	workingDir "$frontendDir"
+	inputs.dir "$frontendDir"
+	group = BasePlugin.BUILD_GROUP
+
+	if (System.getProperty('os.name')
+			.toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine "npm.cmd", "install"
+	} else {commandLine "npm", "install"}
+}
+
+//build를 할거임
+task buildVite(type: Exec) {
+	dependsOn "installVite"
+	workingDir "$frontendDir"
+	inputs.dir "$frontendDir"
+	group = BasePlugin.BUILD_GROUP
+
+	if (System.getProperty('os.name')
+			.toLowerCase(Locale.ROOT).contains('windows')) {
+		commandLine "npm.cmd", "run", "build"
+	} else {commandLine "npm", "run", "build"}
+}
+
+//static으로 빌드를 복사해놓는다.
+task copyViteBuildFiles(type: Copy) {
+	dependsOn "buildVite"
+	from "$frontendDir/dist"
+	into "$projectDir/src/main/resources/static"
+}

@@ -1,0 +1,86 @@
+/* 사이즈 툴바에서 각 크기 항목의 텍스트 변경 */
+/* Huge 항목의 이름 */
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="huge"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="huge"]::before {
+  content: "제목1";
+}
+
+/* Large 항목의 이름 */
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="large"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="large"]::before {
+  content: "제목2";
+}
+
+/* False 항목의 이름 */
+.ql-snow .ql-picker.ql-size .ql-picker-label::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item::before{
+  content: "본문1";
+}
+
+/* Small 항목의 이름 */
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="small"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="small"]::before {
+  content: "본문2";
+}
+
+/* Huge 크기 (26px, 굵게) */
+.ql-editor .ql-size-huge {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Large 크기 (20px, 굵게) */
+.ql-editor .ql-size-large {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* False 크기 (16px, normal) */
+.ql-editor .ql-size-true {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+/* Small 크기 (12px, normal) */
+.ql-editor .ql-size-small {
+  font-size: 12spx;
+  font-weight: normal;
+}
+
+/* 퀼 툴바 스타일 */
+.ql-toolbar {
+  background-color: #f5f5f5;
+  border-radius: 5px 5px 0 0;
+  border: 1px solid #ddd;
+}
+
+
+/* 글쓰기 공간(에디터) 스타일 */
+.ql-container {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0 0 5px 5px; /* 에디터 영역에 둥근 모서리 */
+  padding: 10px; /* 에디터 내부 여백 */
+  min-height: 300px; /* 에디터 최소 높이 */
+}
+
+/* 버튼 컨테이너: 버튼들을 오른쪽 정렬 */
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* 버튼들을 오른쪽 끝으로 정렬 */
+  width: 100%; /* 버튼들이 부모 요소의 전체 너비를 차지하도록 */
+}
+
+/* 버튼들 디자인 */
+.button-container>button{
+  padding: 5px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid #CCCCCC;
+}
+
+/* 버튼 호버 시에 색깔 변화 */
+.button-container>button:hover{
+  background-color: #dddddd;
+  color: #272727;
+}
